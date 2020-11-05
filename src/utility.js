@@ -1,0 +1,1 @@
+export let ip = 'https://back.react-bank.ml'

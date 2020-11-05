@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import axios from 'axios';
+import {ip} from '../../../utility'
 import {
   CButton,
   CCard,
@@ -12,11 +14,51 @@ import {
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
-  CRow
+  CRow,
+  CAlert
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-const Login = () => {
+class Login extends Component {
+  state = {
+    email: "",
+    password: "",
+    error:"",
+    success:"",
+    loading:false
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  handleSubmit = () => {
+    if(this.state.email === "" ||
+    this.state.password === "" ){
+     this.setState({error:'You must complete the form for Login.',success:''})
+    }{
+      this.setState({loading:true})
+      let data = {
+        email: this.state.email,
+        password: this.state.password
+      }
+  
+      axios.post(`${ip}/auth/signin`, data )
+      .then(response => {
+        this.setState({error:'',success:'Logged successfully!',
+          email: "",
+          password: "", 
+          loading:false
+        })
+      })
+      .catch(error => {
+        this.setState({error:error.response.data.error,success:'', loading:false})
+      })
+    }
+  }
+  render() { 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -31,10 +73,14 @@ const Login = () => {
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
-                          <CIcon name="cil-user" />
+                          @
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Username" autoComplete="username" />
+                      <CInput type="text" placeholder="Email"
+                        autoComplete="email" id='email' 
+                        onChange={this.handleChange}
+                        value={this.state.email}
+                        disabled={this.state.loading}/>
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -42,16 +88,28 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Password" autoComplete="current-password" />
+                      <CInput type="password" placeholder="Password" id='password' 
+                            onChange={this.handleChange}
+                            value={this.state.password} autoComplete="current-password" disabled={this.state.loading}/>
                     </CInputGroup>
-                    <CRow>
+                    <CRow className="mb-4">
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4">Login</CButton>
+                        <CButton color="primary" className="px-4" onClick={()=>this.handleSubmit()}>{this.state.loading ? <i style={{fontSize:'15px'}} className="fas fa-spinner fa-pulse"></i> : "Login"}</CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
-                        <CButton color="link" className="px-0">Forgot password?</CButton>
+                        <CButton color="link" className="px-0" disabled={this.state.loading}>Forgot password?</CButton>
                       </CCol>
                     </CRow>
+                    {this.state.error &&
+                      <CAlert color="danger">
+                        {this.state.error}
+                      </CAlert>
+                    }
+                    {this.state.success &&
+                      <CAlert color="success">
+                        {this.state.success}
+                      </CAlert>
+                    }
                   </CForm>
                 </CCardBody>
               </CCard>
@@ -59,10 +117,9 @@ const Login = () => {
                 <CCardBody className="text-center">
                   <div>
                     <h2>Sign up</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua.</p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>Register Now!</CButton>
+                    <p>Do you want to be part of our community? just fill out the following form and you can enjoy our benefits!</p>
+                    <Link to="/register" disabled={this.state.loading}>
+                      <CButton color="primary" disabled={this.state.loading} className="mt-3" active tabIndex={-1}>Register Now!</CButton>
                     </Link>
                   </div>
                 </CCardBody>
@@ -72,7 +129,7 @@ const Login = () => {
         </CRow>
       </CContainer>
     </div>
-  )
+  )}
 }
 
 export default Login
