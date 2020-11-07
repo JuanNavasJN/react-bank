@@ -7,39 +7,41 @@ import {
   CRow,
   CDataTable,
 } from "@coreui/react";
-import { useHistory } from "react-router-dom";
 
 const fields = [
   {
-    label: "Nro",
-    key: "nro",
+    label: "Fecha",
+    key: "date",
   },
   {
-    label: "Tipo",
-    key: "type",
+    label: "Descripción",
+    key: "description",
   },
   {
-    label: "Saldo disponible",
-    key: "available",
+    label: "Monto",
+    key: "amount",
   },
 ];
 
 const items = [
   {
-    nro: 456543212,
-    type: "Corriente",
-    available: 20000,
+    date: "12/04/2020",
+    description: "Pago a tarjeta xxxxxxx",
+    amount: "100",
+  },
+  {
+    date: "13/04/2020",
+    description: "Transferencia a xxxxxxx",
+    amount: "14",
   },
 ];
 
-const VerMisCuentas = () => {
-  const history = useHistory();
-
+const Transacciones = () => {
   return (
     <CRow>
       <CCol xs="12">
         <CCard>
-          <CCardHeader>Mis Cuentas</CCardHeader>
+          <CCardHeader>Transacciones</CCardHeader>
           <CCardBody>
             <CDataTable
               sorter={true}
@@ -47,10 +49,6 @@ const VerMisCuentas = () => {
               fields={fields}
               itemsPerPage={10}
               pagination
-              clickableRows={true}
-              onRowClick={(data) =>
-                history.push("/cuentas/cuentas/" + data.nro)
-              }
             />
           </CCardBody>
         </CCard>
@@ -59,4 +57,4 @@ const VerMisCuentas = () => {
   );
 };
 
-export default VerMisCuentas;
+export default Transacciones;

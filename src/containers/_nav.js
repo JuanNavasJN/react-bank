@@ -18,36 +18,36 @@ export default [
   {
     _tag: "CSidebarNavDropdown",
     name: "Cuentas",
-    // route: "/dashboard",
+    route: "/cuentas",
     icon: "cil-bank",
     _children: [
       {
         _tag: "CSidebarNavItem",
         name: "Ver mis cuentas",
-        to: "/cuentas",
+        to: "/cuentas/cuentas",
       },
       {
         _tag: "CSidebarNavItem",
         name: "Realizar transferencia",
-        to: "/transferir",
+        to: "/cuentas/transferir",
       },
     ],
   },
   {
     _tag: "CSidebarNavDropdown",
     name: "Tarjetas",
-    // route: "/dashboard",
+    route: "/tarjetas",
     icon: "cil-credit-card",
     _children: [
       {
         _tag: "CSidebarNavItem",
         name: "Ver mis tarjetas",
-        to: "/tarjetas",
+        to: "/tarjetas/tarjetas",
       },
       {
         _tag: "CSidebarNavItem",
         name: "Pagar tarjeta",
-        to: "/pagar-tarjeta",
+        to: "/tarjetas/pagar-tarjeta",
       },
     ],
   },
