@@ -54,25 +54,25 @@ class Register extends Component {
       this.state.dni === ""
     ) {
       this.setState({
-        error: "You must complete the form to create an account.",
+        error: "Debes completar el formulario para crear una cuenta.",
         success: "",
       });
     } else if (this.state.password_confirmation !== this.state.password) {
-      this.setState({ error: "Passwords do not match.", success: "" });
+      this.setState({ error: "Las contraseñas no coinciden.", success: "" });
     } else if (this.state.business && this.state.businessName === "") {
       this.setState({
-        error: "You must specify the name of the Business.",
+        error: "Debe especificar el nombre de la empresa.",
         success: "",
       });
     } else if (!this.state.password.trim("")) {
-      this.setState({ error: "Please enter the Password." });
+      this.setState({ error: "Por favor introduzca la contraseña." });
     } else if (
       !this.state.password ||
       !this.state.password.length ||
       this.state.password.length < 8
     ) {
       this.setState({
-        error: "The password must be at least 8 characters long.",
+        error: "La contraseña debe tener al menos 8 caracteres.",
       });
     } else if (
       // eslint-disable-next-line
@@ -80,12 +80,12 @@ class Register extends Component {
     ) {
       this.setState({
         error:
-          "You must use at least 1 special character like !@#$%^&*() in your password.",
+          "Debe utilizar al menos 1 carácter especial como !@#$%^&*() En su contraseña.",
       });
     } else if (!/[0-9]/.test(this.state.password)) {
-      this.setState({ error: "The password must include at least 1 number." });
+      this.setState({ error: "La contraseña debe incluir al menos 1 número." });
     } else if (/\s/.test(this.state.password)) {
-      this.setState({ error: "The password can not contain spaces." });
+      this.setState({ error: "La contraseña no puede contener espacios." });
     } else {
       this.setState({ loading: true });
       let data = {
@@ -105,7 +105,7 @@ class Register extends Component {
         .then((response) => {
           this.setState({
             error: "",
-            success: "Your account has been created successfully!",
+            success: "Su cuenta ha sido creada con éxito!",
             fullName: "",
             password_confirmation: "",
             email: "",
@@ -138,9 +138,9 @@ class Register extends Component {
               <CCard className="mx-4">
                 <CCardBody className="p-4">
                   <CForm>
-                    <h1>Register</h1>
+                    <h1>Registro</h1>
                     <p className="text-muted">
-                      Create an account on React Bank
+                      Crea una cuenta en React Bank
                     </p>
                     <CRow>
                       <CCol md="6" lg="6" xl="6">
@@ -152,7 +152,7 @@ class Register extends Component {
                           </CInputGroupPrepend>
                           <CInput
                             type="text"
-                            placeholder="Fullname"
+                            placeholder="Nombre completo"
                             autoComplete="fullname"
                             id="fullName"
                             onChange={this.handleChange}
@@ -168,7 +168,7 @@ class Register extends Component {
                           </CInputGroupPrepend>
                           <CInput
                             type="text"
-                            placeholder="Identification Number"
+                            placeholder="Número de identificación"
                             autoComplete="identification_number"
                             id="dni"
                             onChange={this.handleChange}
@@ -184,7 +184,7 @@ class Register extends Component {
                           </CInputGroupPrepend>
                           <CInput
                             type="text"
-                            placeholder="Address"
+                            placeholder="Dirección"
                             autoComplete="address"
                             id="address"
                             onChange={this.handleChange}
@@ -200,7 +200,7 @@ class Register extends Component {
                           </CInputGroupPrepend>
                           <CInput
                             type="password"
-                            placeholder="Password"
+                            placeholder="Contraseña"
                             autoComplete="new-password"
                             id="password"
                             onChange={this.handleChange}
@@ -216,7 +216,7 @@ class Register extends Component {
                           </CInputGroupPrepend>
                           <CInput
                             type="text"
-                            placeholder="Email"
+                            placeholder="Correo electrónico"
                             autoComplete="email"
                             id="email"
                             onChange={this.handleChange}
@@ -232,7 +232,7 @@ class Register extends Component {
                           </CInputGroupPrepend>
                           <CInput
                             type="date"
-                            placeholder="Birth of Date"
+                            placeholder="Fecha de nacimiento"
                             autoComplete="birthdate"
                             id="birthdate"
                             onChange={this.handleChange}
@@ -248,7 +248,7 @@ class Register extends Component {
                           </CInputGroupPrepend>
                           <CInput
                             type="text"
-                            placeholder="Phone Number"
+                            placeholder="Número de teléfono"
                             autoComplete="phone_number"
                             id="phoneNumber"
                             onChange={this.handleChange}
@@ -264,7 +264,7 @@ class Register extends Component {
                           </CInputGroupPrepend>
                           <CInput
                             type="password"
-                            placeholder="Repeat password"
+                            placeholder="Repita la contraseña"
                             autoComplete="new-password"
                             id="password_confirmation"
                             onChange={this.handleChange}
@@ -288,7 +288,7 @@ class Register extends Component {
                     />
                     <label for="business" className="pl-2">
                       {" "}
-                      Is it Business?
+                      Es jurídico?
                     </label>
                     {this.state.business && (
                       <CInputGroup className="mb-3">
@@ -299,7 +299,7 @@ class Register extends Component {
                         </CInputGroupPrepend>
                         <CInput
                           type="text"
-                          placeholder="Business Name"
+                          placeholder="Nombre del Comercio"
                           autoComplete="business-name"
                           id="businessName"
                           onChange={this.handleChange}
@@ -318,7 +318,7 @@ class Register extends Component {
                           className="fas fa-spinner fa-pulse"
                         ></i>
                       ) : (
-                        "Create Account"
+                        "Crear cuenta"
                       )}
                     </CButton>
                     <Link to="/login" disabled={this.state.loading}>
@@ -328,7 +328,7 @@ class Register extends Component {
                         tabIndex={-1}
                         disabled={this.state.loading}
                       >
-                        Are you already part of React Bank? Login
+                        ¿Ya formas parte de React Bank? Inicia sesión!
                       </CButton>
                     </Link>
                     {this.state.error && (
