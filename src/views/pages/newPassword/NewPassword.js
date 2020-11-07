@@ -16,11 +16,14 @@ import {
   CRow,
   CAlert
 } from '@coreui/react'
+import { of } from 'core-js/fn/array';
 
-class ForgotPassword extends Component {
+class NewPassword extends Component {
   state = {
     email: "",
-    loading:false
+    loading:false,
+    password_confirmation: "",
+    token:''
   }
 
   handleChange = (e) => {
@@ -29,18 +32,50 @@ class ForgotPassword extends Component {
     })
   }
 
+  componentDidMount = () =>{
+    console.log('this.props.history.location', this.props.history.location)
+    // if(){
+    //   this.setState({token:this.props.history.location})
+    // }
+  }
+
   handleSubmit = () => {
     if(this.state.email === "" ){
-     this.setState({error:'Debe completar el campo de correo contraseña.',success:''})
-    }{
+     this.setState({error:'Debe completar el campo de contraseña.',success:''})
+    }else if (this.state.password_confirmation === ''){
+      this.setState({error:'Debe completar el campo de confirmación de contraseña.',success:''})
+    } else if (this.state.password_confirmation !== this.state.password) {
+      this.setState({ error: "Las contraseñas no coinciden.", success: "" });
+    } else if (
+      !this.state.password ||
+      !this.state.password.length ||
+      this.state.password.length < 7
+    ) {
+      this.setState({
+        error: "La contraseña debe tener al menos 7 caracteres.",
+      });
+    } else if (
+      // eslint-disable-next-line
+      !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(this.state.password)
+    ) {
+      this.setState({
+        error:
+          "Debe utilizar al menos 1 carácter especial como !@#$%^&*() en su contraseña.",
+      });
+    } else if (!/[0-9]/.test(this.state.password)) {
+      this.setState({ error: "La contraseña debe incluir al menos 1 número." });
+    } else if (/\s/.test(this.state.password)) {
+      this.setState({ error: "La contraseña no puede contener espacios." });
+    }else{
       this.setState({loading:true})
       let data = {
-        email: this.state.email
+        password: this.state.password,
+        token:this.state.token
       }
   
-      axios.post(`${ip}/auth/recover`, data )
+      axios.post(`${ip}/auth/new-password`, data )
       .then(response => {
-        this.setState({error:'',success:'El correo fue enviado a su bandeja de entrada satisfactoriamente.', loading:false
+        this.setState({error:'',success:'La contraseña se ha cambiado exitosamente.', loading:false
         })
       })
       .catch(error => {
@@ -98,4 +133,4 @@ class ForgotPassword extends Component {
   )}
 }
 
-export default ForgotPassword
+export default NewPassword

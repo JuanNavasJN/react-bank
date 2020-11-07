@@ -69,10 +69,10 @@ class Register extends Component {
     } else if (
       !this.state.password ||
       !this.state.password.length ||
-      this.state.password.length < 8
+      this.state.password.length < 7
     ) {
       this.setState({
-        error: "La contraseña debe tener al menos 8 caracteres.",
+        error: "La contraseña debe tener al menos 7 caracteres.",
       });
     } else if (
       // eslint-disable-next-line

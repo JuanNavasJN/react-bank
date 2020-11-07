@@ -97,7 +97,7 @@ class Login extends Component {
                         <CButton color="primary" className="px-4" onClick={()=>this.handleSubmit()}>{this.state.loading ? <i style={{fontSize:'15px'}} className="fas fa-spinner fa-pulse"></i> : "Iniciar sesión"}</CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
-                        <Link to="/register" disabled={this.state.loading}>
+                        <Link to="/forgot-password" disabled={this.state.loading}>
                           <CButton color="link" className="px-0" disabled={this.state.loading}>¿Olvidó su contraseña?</CButton>
                         </Link>
                       </CCol>
