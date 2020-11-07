@@ -665,7 +665,7 @@ const Dashboard = () => {
                     <td className="text-center">
                       <div className="c-avatar">
                         <img
-                          src={"avatars/6.jpg"}
+                          src="https://www.gravatar.com/avatar?s=200&d=mp"
                           className="c-avatar-img"
                           alt="admin@bootstrapmaster.com"
                         />
