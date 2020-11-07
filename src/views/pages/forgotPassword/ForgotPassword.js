@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import axios from 'axios';
 import {ip} from '../../../utility'
 import {
@@ -17,15 +16,10 @@ import {
   CRow,
   CAlert
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 
-class Login extends Component {
+class ForgotPassword extends Component {
   state = {
-    email: "",
-    password: "",
-    error:"",
-    success:"",
-    loading:false
+    email: ""
   }
 
   handleChange = (e) => {
@@ -68,8 +62,8 @@ class Login extends Component {
               <CCard className="p-4">
                 <CCardBody>
                   <CForm>
-                    <h1>Iniciar sesión</h1>
-                    <p className="text-muted">Iniciar sesión en su cuenta</p>
+                    <h1>Recuperar contraseña</h1>
+                    <p className="text-muted">¿Olvidaste tu contraseña? Proporciona tu correo electrónico asociado a tu cuenta para recuperarla, solo espera que llegue el correo!</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
@@ -82,24 +76,9 @@ class Login extends Component {
                         value={this.state.email}
                         disabled={this.state.loading}/>
                     </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupPrepend>
-                        <CInputGroupText>
-                          <CIcon name="cil-lock-locked" />
-                        </CInputGroupText>
-                      </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Contraseña" id='password' 
-                            onChange={this.handleChange}
-                            value={this.state.password} autoComplete="current-password" disabled={this.state.loading}/>
-                    </CInputGroup>
                     <CRow className="mb-4">
                       <CCol xs="6">
                         <CButton color="primary" className="px-4" onClick={()=>this.handleSubmit()}>{this.state.loading ? <i style={{fontSize:'15px'}} className="fas fa-spinner fa-pulse"></i> : "Iniciar sesión"}</CButton>
-                      </CCol>
-                      <CCol xs="6" className="text-right">
-                        <Link to="/register" disabled={this.state.loading}>
-                          <CButton color="link" className="px-0" disabled={this.state.loading}>¿Olvidó su contraseña?</CButton>
-                        </Link>
                       </CCol>
                     </CRow>
                     {this.state.error &&
@@ -115,17 +94,6 @@ class Login extends Component {
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Regístrate</h2>
-                    <p>¿Quieres formar parte de nuestra comunidad? solo llena el siguiente formulario y podrás disfrutar de nuestros beneficios!</p>
-                    <Link to="/register" disabled={this.state.loading}>
-                      <CButton color="primary" disabled={this.state.loading} className="mt-3" active tabIndex={-1}>Regístrate ahora!</CButton>
-                    </Link>
-                  </div>
-                </CCardBody>
-              </CCard>
             </CCardGroup>
           </CCol>
         </CRow>
@@ -134,4 +102,4 @@ class Login extends Component {
   )}
 }
 
-export default Login
+export default ForgotPassword
