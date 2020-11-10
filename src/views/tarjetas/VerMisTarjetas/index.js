@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   CCard,
   CCardBody,
@@ -6,10 +6,13 @@ import {
   CCol,
   CRow,
   CDataTable,
+  CButton,
 } from "@coreui/react";
 import Cards from "react-credit-cards";
-
+import { useHistory } from "react-router-dom";
 import "react-credit-cards/es/styles-compiled.css";
+import axios from "axios";
+import { ip } from "../../../utility";
 
 const fields = [
   {
@@ -26,22 +29,56 @@ const fields = [
   },
 ];
 
-const items = [
-  {
-    date: "23/08/2019",
-    description: "Pago de xxxxxx",
-    amount: 39,
-  },
-];
+// const items = [
+//   {
+//     date: "23/08/2019",
+//     description: "Pago de xxxxxx",
+//     amount: 39,
+//   },
+// ];
 
 const VerMisTarjetas = () => {
+  const history = useHistory();
   const [state, setState] = useState({
-    cvc: 234,
-    expiry: "12/23",
+    cvc: 0,
+    expiry: "",
     focus: "",
-    name: "John Doe",
-    number: "4645123412341234",
+    name: "",
+    number: "",
+    available: 0,
+    limit: 0,
   });
+
+  useEffect((_) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return history.push("/login");
+    }
+
+    axios
+      .get(ip + "/cards", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data);
+
+        const card = res.data[0];
+
+        setState({
+          ...state,
+          cvc: card.cvv,
+          name: card.name,
+          expiry: card.expiration,
+          number: card.number,
+          available: card.available,
+          limit: card.limit,
+        });
+      });
+    // eslint-disable-next-line
+  }, []);
 
   const handleOver = (_) => {
     setState({ ...state, focus: "cvc" });
@@ -57,7 +94,7 @@ const VerMisTarjetas = () => {
           <CCardHeader>Mis Tarjetas</CCardHeader>
           <CCardBody>
             <CRow>
-              <CCol xs="12">
+              <CCol xs="12" className="text-right">
                 <div onMouseOver={handleOver} onMouseLeave={handleLeave}>
                   <Cards
                     cvc={state.cvc}
@@ -66,22 +103,25 @@ const VerMisTarjetas = () => {
                     name={state.name}
                     number={state.number}
                   />
+                  <CButton className="mr-5" color="dark">
+                    Ver CVC
+                  </CButton>
                 </div>
               </CCol>
             </CRow>
             <CRow className="mt-5 text-center">
               <CCol xs="12" md="6">
-                <b>Saldo disponible: XXXXX</b>
+                <b>Saldo disponible: {state.available}</b>
               </CCol>
               <CCol xs="12" md="6">
-                <b>Limite: XXXXX</b>
+                <b>Limite: {state.limit}</b>
               </CCol>
             </CRow>
             <CRow className="mt-5 px-1 px-md-4">
               <CCol xs="12">
                 <CDataTable
                   sorter={true}
-                  items={items}
+                  items={[]}
                   fields={fields}
                   itemsPerPage={10}
                   pagination
