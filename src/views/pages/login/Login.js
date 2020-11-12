@@ -147,7 +147,7 @@ class Login extends Component {
                           </CButton>
                         </CCol>
                         <CCol xs="6" className="text-right">
-                          <Link to="/register" disabled={this.state.loading}>
+                          <Link to="/forgot-password" disabled={this.state.loading}>
                             <CButton
                               color="link"
                               className="px-0"
