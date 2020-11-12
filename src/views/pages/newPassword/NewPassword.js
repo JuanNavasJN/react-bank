@@ -16,11 +16,11 @@ import {
   CRow,
   CAlert
 } from '@coreui/react'
-import { of } from 'core-js/fn/array';
+import CIcon from '@coreui/icons-react'
 
 class NewPassword extends Component {
   state = {
-    email: "",
+    password: "",
     loading:false,
     password_confirmation: "",
     token:''
@@ -33,14 +33,13 @@ class NewPassword extends Component {
   }
 
   componentDidMount = () =>{
-    console.log('this.props.history.location', this.props.history.location)
-    // if(){
-    //   this.setState({token:this.props.history.location})
-    // }
+    if(this.props && this.props.history && this.props.history.location ){
+      this.setState({token:this.props.history.location.pathname.split("/new-password/")[1]})
+    }
   }
 
   handleSubmit = () => {
-    if(this.state.email === "" ){
+    if(this.state.password === "" ){
      this.setState({error:'Debe completar el campo de contraseña.',success:''})
     }else if (this.state.password_confirmation === ''){
       this.setState({error:'Debe completar el campo de confirmación de contraseña.',success:''})
@@ -77,6 +76,9 @@ class NewPassword extends Component {
       .then(response => {
         this.setState({error:'',success:'La contraseña se ha cambiado exitosamente.', loading:false
         })
+        setTimeout(() => {
+          window.location='/login'
+        }, 3000);
       })
       .catch(error => {
         this.setState({error:error.response.data.error,success:'', loading:false})
@@ -93,23 +95,49 @@ class NewPassword extends Component {
               <CCard className="p-4">
                 <CCardBody>
                   <CForm>
-                    <h1>Recuperar contraseña</h1>
-                    <p className="text-muted">¿Olvidaste tu contraseña? Proporciona el correo electrónico asociado a tu cuenta para recuperarla, solo espera a que llegue el correo!</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupPrepend>
-                        <CInputGroupText>
-                          @
-                        </CInputGroupText>
-                      </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Correo electrónico"
-                        autoComplete="email" id='email' 
-                        onChange={this.handleChange}
-                        value={this.state.email}
-                        disabled={this.state.loading}/>
-                    </CInputGroup>
+                    <h1>Nueva contraseña</h1>
+                    <p className="text-muted">Proporciona tu nueva contraseña!</p>
+                    <CRow>
+                      <CCol md={6} lg={6}>
+                        <CInputGroup className="mb-3">
+                          <CInputGroupPrepend>
+                            <CInputGroupText>
+                              <CIcon name="cil-lock-locked" />
+                            </CInputGroupText>
+                          </CInputGroupPrepend>
+                          <CInput
+                            type="password"
+                            placeholder="Contraseña"
+                            autoComplete="new-password"
+                            id="password"
+                            onChange={this.handleChange}
+                            value={this.state.password}
+                            disabled={this.state.loading}
+                          />
+                        </CInputGroup>
+                      </CCol>
+                      <CCol md={6} lg={6}>
+                        <CInputGroup className="mb-3">
+                          <CInputGroupPrepend>
+                            <CInputGroupText>
+                              <CIcon name="cil-lock-locked" />
+                            </CInputGroupText>
+                          </CInputGroupPrepend>
+                          <CInput
+                            type="password"
+                            placeholder="Repita la contraseña"
+                            autoComplete="new-password"
+                            id="password_confirmation"
+                            onChange={this.handleChange}
+                            disabled={this.state.loading}
+                            value={this.state.password_confirmation}
+                          />
+                        </CInputGroup>
+                      </CCol>
+                    </CRow>
                     <CRow className="mb-4">
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4" onClick={()=>this.handleSubmit()}>{this.state.loading ? <i style={{fontSize:'15px'}} className="fas fa-spinner fa-pulse"></i> : "Enviar"}</CButton>
+                        <CButton color="primary" className="px-4" onClick={()=>this.handleSubmit()}>{this.state.loading ? <i style={{fontSize:'15px'}} className="fas fa-spinner fa-pulse"></i> : "Guardar"}</CButton>
                       </CCol>
                     </CRow>
                     {this.state.error &&

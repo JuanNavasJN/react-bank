@@ -23,14 +23,14 @@ const WidgetsBrand = lazy(() => import("../widgets/WidgetsBrand.js"));
 const Dashboard = () => {
   const history = useHistory();
 
-  useEffect((_) => {
-    const token = localStorage.getItem("token");
+  // useEffect((_) => {
+  //   const token = localStorage.getItem("token");
 
-    if (!token) {
-      history.push("/login");
-    }
-    // eslint-disable-next-line
-  }, []);
+  //   if (!token) {
+  //     history.push("/login");
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
 
   return (
     <>

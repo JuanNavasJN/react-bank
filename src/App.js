@@ -45,7 +45,7 @@ class App extends Component {
             />
             <Route
               exact
-              path="/new-password/:id"
+              path="/new-password/:token"
               name="New Password"
               render={(props) => <NewPassword {...props} />}
             />

@@ -47,7 +47,7 @@ class Login extends Component {
   
       axios.post(`${ip}/auth/signin`, data )
       .then(response => {
-        this.setState({error:'',success:'Registrado exitosamente!',
+        this.setState({error:'',success:'Ha iniciado sesión exitosamente!',
           email: "",
           password: "", 
           loading:false
