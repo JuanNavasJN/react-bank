@@ -23,18 +23,18 @@ const fields = [
   },
 ];
 
-const items = [
-  {
-    date: "12/04/2020",
-    description: "Pago a tarjeta xxxxxxx",
-    amount: "100",
-  },
-  {
-    date: "13/04/2020",
-    description: "Transferencia a xxxxxxx",
-    amount: "14",
-  },
-];
+// const items = [
+//   {
+//     date: "12/04/2020",
+//     description: "Pago a tarjeta xxxxxxx",
+//     amount: "100",
+//   },
+//   {
+//     date: "13/04/2020",
+//     description: "Transferencia a xxxxxxx",
+//     amount: "14",
+//   },
+// ];
 
 const Transacciones = () => {
   return (
@@ -45,7 +45,7 @@ const Transacciones = () => {
           <CCardBody>
             <CDataTable
               sorter={true}
-              items={items}
+              items={[]}
               fields={fields}
               itemsPerPage={10}
               pagination

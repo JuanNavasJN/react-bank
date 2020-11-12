@@ -42,7 +42,9 @@ class Register extends Component {
     });
   };
 
-  handleRegister = () => {
+  handleRegister = (e) => {
+    e.preventDefault();
+
     if (
       this.state.fullName === "" ||
       this.state.password_confirmation === "" ||
@@ -118,10 +120,16 @@ class Register extends Component {
             dni: "",
             loading: false,
           });
+
+          setTimeout((_) => {
+            this.props.history.push("/login");
+          }, 2000);
         })
         .catch((error) => {
+          console.log(error.response.data.error);
+
           this.setState({
-            error: error.response.data.error,
+            error: "Ha ocurrido un error",
             success: "",
             loading: false,
           });
@@ -137,11 +145,9 @@ class Register extends Component {
             <CCol md="9" lg="7" xl="6">
               <CCard className="mx-4">
                 <CCardBody className="p-4">
-                  <CForm>
+                  <CForm onSubmit={this.handleRegister}>
                     <h1>Registro</h1>
-                    <p className="text-muted">
-                      Crea una cuenta en React Bank
-                    </p>
+                    <p className="text-muted">Crea una cuenta en React Bank</p>
                     <CRow>
                       <CCol md="6" lg="6" xl="6">
                         <CInputGroup className="mb-3">
@@ -163,7 +169,7 @@ class Register extends Component {
                         <CInputGroup className="mb-3">
                           <CInputGroupPrepend>
                             <CInputGroupText>
-                              <i class="fas fa-id-card"></i>
+                              <i className="fas fa-id-card"></i>
                             </CInputGroupText>
                           </CInputGroupPrepend>
                           <CInput
@@ -179,7 +185,7 @@ class Register extends Component {
                         <CInputGroup className="mb-3">
                           <CInputGroupPrepend>
                             <CInputGroupText>
-                              <i class="fas fa-map-marker-alt"></i>
+                              <i className="fas fa-map-marker-alt"></i>
                             </CInputGroupText>
                           </CInputGroupPrepend>
                           <CInput
@@ -215,7 +221,7 @@ class Register extends Component {
                             <CInputGroupText>@</CInputGroupText>
                           </CInputGroupPrepend>
                           <CInput
-                            type="text"
+                            type="email"
                             placeholder="Correo electrónico"
                             autoComplete="email"
                             id="email"
@@ -227,7 +233,7 @@ class Register extends Component {
                         <CInputGroup className="mb-3">
                           <CInputGroupPrepend>
                             <CInputGroupText>
-                              <i class="fas fa-birthday-cake"></i>
+                              <i className="fas fa-birthday-cake"></i>
                             </CInputGroupText>
                           </CInputGroupPrepend>
                           <CInput
@@ -243,7 +249,7 @@ class Register extends Component {
                         <CInputGroup className="mb-3">
                           <CInputGroupPrepend>
                             <CInputGroupText>
-                              <i class="fas fa-phone"></i>
+                              <i className="fas fa-phone"></i>
                             </CInputGroupText>
                           </CInputGroupPrepend>
                           <CInput
@@ -286,7 +292,7 @@ class Register extends Component {
                       }
                       value="business"
                     />
-                    <label for="business" className="pl-2">
+                    <label htmlFor="business" className="pl-2">
                       {" "}
                       Es jurídico?
                     </label>
@@ -294,7 +300,7 @@ class Register extends Component {
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend>
                           <CInputGroupText>
-                            <i class="fas fa-industry"></i>
+                            <i className="fas fa-industry"></i>
                           </CInputGroupText>
                         </CInputGroupPrepend>
                         <CInput
@@ -309,8 +315,9 @@ class Register extends Component {
                     )}
                     <CButton
                       color="success"
+                      type="submit"
                       block
-                      onClick={() => this.handleRegister()}
+                      // onClick={() => this.handleRegister()}
                     >
                       {this.state.loading ? (
                         <i
