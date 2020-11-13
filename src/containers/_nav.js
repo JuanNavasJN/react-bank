@@ -16,6 +16,12 @@ export default [
     // },
   },
   {
+    _tag: "CSidebarNavItem",
+    name: "Perfil",
+    to: "/perfil",
+    icon: "cil-user",
+  },
+  {
     _tag: "CSidebarNavDropdown",
     name: "Cuentas",
     route: "/cuentas",

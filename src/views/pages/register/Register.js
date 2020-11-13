@@ -67,7 +67,7 @@ class Register extends Component {
         success: "",
       });
     } else if (!this.state.password.trim("")) {
-      this.setState({ error: "Por favor introduzca la contraseña." });
+      this.setState({ error: "Por favor introduzca la contraseña.", success: "" });
     } else if (
       !this.state.password ||
       !this.state.password.length ||
@@ -75,6 +75,7 @@ class Register extends Component {
     ) {
       this.setState({
         error: "La contraseña debe tener al menos 7 caracteres.",
+        success: ""
       });
     } else if (
       // eslint-disable-next-line
@@ -83,6 +84,7 @@ class Register extends Component {
       this.setState({
         error:
           "Debe utilizar al menos 1 carácter especial como !@#$%^&*() En su contraseña.",
+          success: ""
       });
     } else if (!/[0-9]/.test(this.state.password)) {
       this.setState({ error: "La contraseña debe incluir al menos 1 número." });

@@ -66,7 +66,7 @@ class ForgotPassword extends Component {
                           @
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Correo electrónico"
+                      <CInput type="email" placeholder="Correo electrónico"
                         autoComplete="email" id='email' 
                         onChange={this.handleChange}
                         value={this.state.email}
