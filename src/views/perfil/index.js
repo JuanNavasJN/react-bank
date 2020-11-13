@@ -31,17 +31,41 @@ class Perfil extends Component{
 
   handleSubmit = (e) => {
     e.preventDefault()
-    {
+    if (
+      this.state.fullName === "" ||
+      this.state.email === "" ||
+      this.state.birthdate === "" ||
+      this.state.phoneNumber === "" ||
+      this.state.address === "" ||
+      this.state.dni === ""
+    ) {
+      this.setState({
+        error: "Debes completar el formulario para crear una cuenta.",
+        success: "",
+      });
+    }else {
       this.setState({ loading: true });
-      let data = {
-        fullName: this.state.fullName,
-        email: this.state.email,
-        birthdate: this.state.birthdate,
-        business: this.state.business,
-        phoneNumber: this.state.phoneNumber,
-        address: this.state.address,
-        dni: this.state.dni
-      };
+      let data 
+      if(this.state.business){
+        data = {
+          fullName: this.state.fullName,
+          email: this.state.email,
+          birthdate: this.state.birthdate,
+          business: this.state.business,
+          phoneNumber: this.state.phoneNumber,
+          address: this.state.address,
+          dni: this.state.dni
+        };
+      }else{
+        data = {
+          fullName: this.state.fullName,
+          email: this.state.email,
+          birthdate: this.state.birthdate,
+          phoneNumber: this.state.phoneNumber,
+          address: this.state.address,
+          dni: this.state.dni
+        };
+      }
       axios
       .put(`${ip}/profile/update`, data,{headers: {Authorization: localStorage.getItem("token")}})
       .then((res) => {
@@ -240,6 +264,22 @@ class Perfil extends Component{
                         disabled={this.state.loading}
                       />
                     </CInputGroup>
+                    {this.state.business !== '' &&
+                    this.state.apikey !== '' &&
+                      <CInputGroup className="mb-3">
+                        <CInputGroupPrepend>
+                          <CInputGroupText>
+                            <i class="fas fa-key"></i>
+                          </CInputGroupText>
+                        </CInputGroupPrepend>
+                        <CInput
+                          type="text"
+                          placeholder="Apikey"
+                          autoComplete="apikey"
+                          value={this.state.apikey}
+                        />
+                      </CInputGroup>
+                    }
                   </CCol>
                   <CCol md="6" lg="6" xl="6">
                     <CInputGroup className="mb-3">
@@ -288,6 +328,24 @@ class Perfil extends Component{
                         disabled={this.state.loading}
                       />
                     </CInputGroup>
+                    {this.state.business !== '' &&
+                      <CInputGroup className="mb-3">
+                        <CInputGroupPrepend>
+                          <CInputGroupText>
+                          <i className="fas fa-industry"></i>
+                          </CInputGroupText>
+                        </CInputGroupPrepend>
+                        <CInput
+                          type="text"
+                          placeholder="Nombre del Comercio"
+                          autoComplete="business"
+                          id="business"
+                          onChange={this.handleChange}
+                          value={this.state.business}
+                          disabled={this.state.loading}
+                        />
+                      </CInputGroup>
+                    }
                     <CButton
                       color="success"
                       type="submit"
