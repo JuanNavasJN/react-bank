@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   CCard,
   CCardBody,
@@ -7,6 +7,8 @@ import {
   CRow,
   CDataTable,
 } from "@coreui/react";
+import axios from "axios";
+import { ip } from "../../../../utility";
 
 const fields = [
   {
@@ -20,6 +22,10 @@ const fields = [
   {
     label: "Monto",
     key: "amount",
+  },
+  {
+    label: "Ref",
+    key: "ref",
   },
 ];
 
@@ -36,7 +42,45 @@ const fields = [
 //   },
 // ];
 
-const Transacciones = () => {
+const Transacciones = ({ history, match }) => {
+  const [items, setItems] = useState([]);
+
+  useEffect((_) => {
+    const { cuentaNro } = match.params;
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return history.push("/login");
+    }
+
+    axios
+      .get(ip + "/account/" + cuentaNro + "/transactions", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data);
+        setItems(
+          res.data.map((t) => ({
+            ...t,
+            date: new Date(t.date).toLocaleString(),
+          }))
+        );
+      });
+    // eslint-disable-next-line
+  }, []);
+  useEffect(() => {
+    const data = history.location.state.items;
+    setItems(
+      data.map((t) => ({
+        ...t,
+        date: new Date(t.date).toLocaleString(),
+      }))
+    );
+    // eslint-disable-next-line
+  }, [history]);
+
   return (
     <CRow>
       <CCol xs="12">
@@ -45,10 +89,21 @@ const Transacciones = () => {
           <CCardBody>
             <CDataTable
               sorter={true}
-              items={[]}
+              items={items}
               fields={fields}
               itemsPerPage={10}
               pagination
+              scopedSlots={{
+                amount: (item) => (
+                  <td>
+                    {item.credit ? (
+                      <span className="text-success">+ {item.amount}</span>
+                    ) : (
+                      <span className="text-danger">- {item.amount}</span>
+                    )}
+                  </td>
+                ),
+              }}
             />
           </CCardBody>
         </CCard>

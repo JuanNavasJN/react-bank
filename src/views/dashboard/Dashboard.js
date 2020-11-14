@@ -1,19 +1,19 @@
 // import React, { lazy, useEffect } from "react";
 import { useEffect } from "react";
 
-// import {
-//   CBadge,
-//   CButton,
-//   CButtonGroup,
-//   CCard,
-//   CCardBody,
-//   CCardFooter,
-//   CCardHeader,
-//   CCol,
-//   CProgress,
-//   CRow,
-//   CCallout,
-// } from "@coreui/react";
+import {
+  // CBadge,
+  // CButton,
+  // CButtonGroup,
+  CCard,
+  CCardBody,
+  // CCardFooter,
+  // CCardHeader,
+  CCol,
+  // CProgress,
+  CRow,
+  // CCallout,
+} from "@coreui/react";
 // import CIcon from "@coreui/icons-react";
 import { useHistory } from "react-router-dom";
 
@@ -34,7 +34,32 @@ const Dashboard = () => {
     // eslint-disable-next-line
   }, []);
 
-  return null;
+  return (
+    <CRow>
+      <CCol xs="12" sm="6" md="4">
+        <CCard
+          color="primary"
+          className="text-white"
+          onClick={(_) => history.push("/cuentas/cuentas")}
+        >
+          <CCardBody>
+            <h3>Ver mis cuentas</h3>
+          </CCardBody>
+        </CCard>
+      </CCol>
+      <CCol xs="12" sm="6" md="4">
+        <CCard
+          color="info"
+          className="text-white"
+          onClick={(_) => history.push("/tarjetas/tarjetas")}
+        >
+          <CCardBody>
+            <h3>Ver mis tarjetas</h3>
+          </CCardBody>
+        </CCard>
+      </CCol>
+    </CRow>
+  );
 
   // return (
   //   <>
