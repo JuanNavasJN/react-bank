@@ -133,8 +133,17 @@ class Register extends Component {
         .catch((error) => {
           console.log(error.response.data.error);
 
+          let message = "Ha ocurrido un error";
+          const msgError = error.response.data.error;
+
+          if (msgError === "email already exists") {
+            message = "El email ya esta registrado";
+          } else if (msgError === "dni already exists") {
+            message = "El DNI ya esta registrado";
+          }
+
           this.setState({
-            error: "Ha ocurrido un error",
+            error: message,
             success: "",
             loading: false,
           });
