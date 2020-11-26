@@ -15,7 +15,7 @@ import {
   CInputGroupPrepend,
   CInputGroupText,
   CRow,
-  CAlert,
+  CAlert
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
