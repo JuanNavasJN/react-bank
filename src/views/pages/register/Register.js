@@ -67,7 +67,10 @@ class Register extends Component {
         success: "",
       });
     } else if (!this.state.password.trim("")) {
-      this.setState({ error: "Por favor introduzca la contraseña.", success: "" });
+      this.setState({
+        error: "Por favor introduzca la contraseña.",
+        success: "",
+      });
     } else if (
       !this.state.password ||
       !this.state.password.length ||
@@ -75,7 +78,7 @@ class Register extends Component {
     ) {
       this.setState({
         error: "La contraseña debe tener al menos 7 caracteres.",
-        success: ""
+        success: "",
       });
     } else if (
       // eslint-disable-next-line
@@ -84,7 +87,7 @@ class Register extends Component {
       this.setState({
         error:
           "Debe utilizar al menos 1 carácter especial como !@#$%^&*() En su contraseña.",
-          success: ""
+        success: "",
       });
     } else if (!/[0-9]/.test(this.state.password)) {
       this.setState({ error: "La contraseña debe incluir al menos 1 número." });
@@ -130,8 +133,17 @@ class Register extends Component {
         .catch((error) => {
           console.log(error.response.data.error);
 
+          let message = "Ha ocurrido un error";
+          const msgError = error.response.data.error;
+
+          if (msgError === "email already exists") {
+            message = "El email ya esta registrado";
+          } else if (msgError === "dni already exists") {
+            message = "El DNI ya esta registrado";
+          }
+
           this.setState({
-            error: "Ha ocurrido un error",
+            error: message,
             success: "",
             loading: false,
           });
@@ -296,7 +308,7 @@ class Register extends Component {
                     />
                     <label htmlFor="business" className="pl-2">
                       {" "}
-                      Es jurídico?
+                      ¿Es jurídico?
                     </label>
                     {this.state.business && (
                       <CInputGroup className="mb-3">

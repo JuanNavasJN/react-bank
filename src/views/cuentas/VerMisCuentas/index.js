@@ -57,6 +57,7 @@ const VerMisCuentas = () => {
         },
       })
       .then((res) => {
+        // console.log(res.data);
         setItems(
           res.data.map((e) => ({
             ...e,
@@ -82,7 +83,9 @@ const VerMisCuentas = () => {
               pagination
               clickableRows={true}
               onRowClick={(data) =>
-                history.push("/cuentas/cuentas/" + data.nro)
+                history.push("/cuentas/cuentas/" + data.nro, {
+                  items: data.transactions,
+                })
               }
             />
           </CCardBody>

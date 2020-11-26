@@ -27,6 +27,10 @@ const fields = [
     label: "Monto",
     key: "amount",
   },
+  {
+    label: "Ref",
+    key: "ref",
+  },
 ];
 
 // const items = [
@@ -34,8 +38,10 @@ const fields = [
 //     date: "23/08/2019",
 //     description: "Pago de xxxxxx",
 //     amount: 39,
+//     ref: "0001"
 //   },
 // ];
+//new Date(t.createdAt).toLocaleDateString("es-VE"),
 
 const VerMisTarjetas = () => {
   const history = useHistory();
@@ -48,6 +54,7 @@ const VerMisTarjetas = () => {
     available: 0,
     limit: 0,
   });
+  const [items, setItems] = useState([]);
 
   useEffect((_) => {
     const token = localStorage.getItem("token");
@@ -76,6 +83,13 @@ const VerMisTarjetas = () => {
           available: card.available,
           limit: card.limit,
         });
+
+        setItems(
+          card.transactions.map((t) => ({
+            ...t,
+            date: new Date(t.date).toLocaleString(),
+          }))
+        );
       });
     // eslint-disable-next-line
   }, []);
@@ -121,10 +135,21 @@ const VerMisTarjetas = () => {
               <CCol xs="12">
                 <CDataTable
                   sorter={true}
-                  items={[]}
+                  items={items}
                   fields={fields}
                   itemsPerPage={10}
                   pagination
+                  scopedSlots={{
+                    amount: (item) => (
+                      <td>
+                        {item.credit ? (
+                          <span className="text-success">+ {item.amount}</span>
+                        ) : (
+                          <span className="text-danger">- {item.amount}</span>
+                        )}
+                      </td>
+                    ),
+                  }}
                 />
               </CCol>
             </CRow>
