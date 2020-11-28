@@ -54,7 +54,7 @@ class RealizarTransferencia extends Component{
     }else{
       if( x !== '00' ){
         x = (x/100).toFixed(2);
-        let y = String(x)
+        let y = String(x).split('.').join(',')
         this.setState({[e.target.id]: y})
       }else{
         this.setState({[e.target.id]:''})
@@ -104,7 +104,7 @@ class RealizarTransferencia extends Component{
     let data = {
       fromAccount: this.state.nro,
       toAccount: this.state.to,
-      amount: parseFloat(this.state.amount.split('$').join('').split(',').join('')).toFixed(2)
+      amount: parseFloat(this.state.amount.split('.').join('').split(',').join('.')).toFixed(2)
     }
     axios
     .post(`${ip}/transfer`, data, {headers: {Authorization: localStorage.getItem("token")}})

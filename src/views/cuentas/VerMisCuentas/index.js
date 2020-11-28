@@ -62,7 +62,7 @@ const VerMisCuentas = () => {
           res.data.map((e) => ({
             ...e,
             type: e.type === "checking" ? "Corriente" : "Ahorro",
-            opt: "Ver transacciones",
+            opt: "Click para ver transacciones",
           }))
         );
       });

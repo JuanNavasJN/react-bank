@@ -29,19 +29,6 @@ const fields = [
   },
 ];
 
-// const items = [
-//   {
-//     date: "12/04/2020",
-//     description: "Pago a tarjeta xxxxxxx",
-//     amount: "100",
-//   },
-//   {
-//     date: "13/04/2020",
-//     description: "Transferencia a xxxxxxx",
-//     amount: "14",
-//   },
-// ];
-
 const Transacciones = ({ history, match }) => {
   const [items, setItems] = useState([]);
 
@@ -60,7 +47,6 @@ const Transacciones = ({ history, match }) => {
         },
       })
       .then((res) => {
-        // console.log(res.data);
         setItems(
           res.data.map((t) => ({
             ...t,
