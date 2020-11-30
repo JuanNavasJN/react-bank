@@ -6,7 +6,7 @@ import {
   CRow,
   CDataTable,
   CCardHeader,
-  CLink
+  CLink,
 } from "@coreui/react";
 import { useHistory } from "react-router-dom";
 import { ip } from "../../utility";
@@ -71,31 +71,6 @@ const Dashboard = () => {
 
   return (
     <CRow>
-      <CCol xs="12">
-        <CCard>
-          <CCardHeader>Transacciones <CLink to='report-pdf'><i class="fas fa-download"></i></CLink></CCardHeader>
-          <CCardBody>
-            <CDataTable
-              sorter={true}
-              items={items}
-              fields={fields}
-              itemsPerPage={10}
-              pagination
-              scopedSlots={{
-                amount: (item) => (
-                  <td>
-                    {item.credit ? (
-                      <span className="text-success">+ {item.amount}</span>
-                    ) : (
-                      <span className="text-danger">- {item.amount}</span>
-                    )}
-                  </td>
-                ),
-              }}
-            />
-          </CCardBody>
-        </CCard>
-      </CCol>
       <CCol xs="12" sm="6" md="4">
         <CCard
           color="primary"
@@ -118,9 +93,38 @@ const Dashboard = () => {
           </CCardBody>
         </CCard>
       </CCol>
+      <CCol xs="12">
+        <CCard>
+          <CCardHeader>
+            Transacciones{" "}
+            <CLink to="report-pdf">
+              <i class="fas fa-download"></i>
+            </CLink>
+          </CCardHeader>
+          <CCardBody>
+            <CDataTable
+              sorter={true}
+              items={items}
+              fields={fields}
+              itemsPerPage={10}
+              pagination
+              scopedSlots={{
+                amount: (item) => (
+                  <td>
+                    {item.credit ? (
+                      <span className="text-success">+ {item.amount}</span>
+                    ) : (
+                      <span className="text-danger">- {item.amount}</span>
+                    )}
+                  </td>
+                ),
+              }}
+            />
+          </CCardBody>
+        </CCard>
+      </CCol>
     </CRow>
   );
-
 };
 
 export default Dashboard;
