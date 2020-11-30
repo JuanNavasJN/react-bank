@@ -1,6 +1,7 @@
 import React from "react";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
+const ReportPDF = React.lazy(() => import("./views/dashboard/ReportPDF"));
 
 //----------------- Tarjetas -----
 const VerMisTarjetas = React.lazy(() =>
@@ -25,6 +26,7 @@ const Perfil = React.lazy(() => import("./views/perfil"));
 const routes = [
   { path: "/", exact: true, name: "Inicio" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
+  { path: "/report-pdf", name: "Reporte", component: ReportPDF },
   {
     path: "/cuentas/transferir",
     name: "Transferir",

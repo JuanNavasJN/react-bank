@@ -8,10 +8,11 @@ import {
   CFormGroup,
   CLabel,
   CInput,
-  CSelect,
+  // CSelect,
   CForm,
   CButton,
   CAlert,
+  CInputGroupText
 } from "@coreui/react";
 import { ip } from "../../../utility";
 import axios from "axios";
@@ -80,7 +81,6 @@ const PagarTarjeta = ({ history }) => {
     } else {
       if (x !== "00") {
         x = (x / 100).toFixed(2);
-        // let y = String(x);
         let y = String(x).split(".").join(",");
         setAmount(y);
       } else {
@@ -88,6 +88,44 @@ const PagarTarjeta = ({ history }) => {
       }
     }
   };
+
+  const showFormat = (e) => {
+    let x = e;
+    x = x.replace(/[^0-9]/gi, "");
+    let y = "";
+    if (x.length > 5) {
+      let nuevaLong = x.length - 2;
+      let start = nuevaLong % 3;
+      if (start !== 0) {
+        start = 3 - start;
+      }
+      for (var i = 0; i < nuevaLong; i++) {
+        y += x[i];
+        start++;
+        if (start === 3 && i !== nuevaLong - 1) {
+          y += ".";
+          start = 0;
+        }
+      }
+      y += ",";
+      y += x[x.length - 2];
+      y += x[x.length - 1];
+      return y;
+    } else {
+      if (x !== "00") {
+        x = (x / 100).toFixed(2);
+        let y = String(x).split(".").join(",");
+        return y;
+      } else {
+        return "";
+      }
+    }
+  };
+
+
+  // const showFormat = (num) => {
+	// 	return String(num).split(".").join(",").replace(/(\d)(?=(\d{3})+(?!\d))/g, '.')
+	// }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -115,7 +153,19 @@ const PagarTarjeta = ({ history }) => {
       .then((res) => {
         setLoading(false);
         setSuccess("El pago se realizó exitosamente.");
+        
+        let aux =
+        parseFloat(
+          accounts[0].available
+        ).toFixed(2) -
+        parseFloat(
+          amount.split(".").join("").split(",").join(".")
+        );
 
+        let aux2 = accounts
+        aux2[0].available = aux.toFixed(2)
+
+        setAccounts(aux2)
         setAmount("");
       })
       .catch((error) => {
@@ -142,7 +192,14 @@ const PagarTarjeta = ({ history }) => {
             <CForm onSubmit={handleSubmit}>
               <CRow>
                 <CCol xs="12">
-                  <CFormGroup>
+                    <div style={{ marginBottom: "8px" }}>
+                      <span>Cuenta a debitar</span>
+                      <CInputGroupText>{accounts && accounts[0] && accounts[0].nro }</CInputGroupText>
+                      <span style={{ color: "#4d54d4" }}>
+                        Saldo disponible: {accounts && accounts[0] && showFormat(accounts[0].available)}
+                      </span>
+                    </div>
+                  {/* <CFormGroup>
                     <CLabel htmlFor="account">Seleccionar cuenta</CLabel>
                     <CSelect
                       custom
@@ -156,12 +213,12 @@ const PagarTarjeta = ({ history }) => {
                         </option>
                       ))}
                     </CSelect>
-                  </CFormGroup>
+                  </CFormGroup> */}
                 </CCol>
               </CRow>
               <CRow>
                 <CCol xs="12">
-                  <CFormGroup>
+                  {/* <CFormGroup>
                     <CLabel htmlFor="card">Seleccionar tarjeta</CLabel>
                     <CSelect
                       custom
@@ -175,7 +232,14 @@ const PagarTarjeta = ({ history }) => {
                         </option>
                       ))}
                     </CSelect>
-                  </CFormGroup>
+                  </CFormGroup> */}
+                  <div style={{ marginBottom: "8px" }}>
+                    <span>Tarjeta a pagar</span>
+                    <CInputGroupText>{cards && cards[0] && cards[0].number }</CInputGroupText>
+                    <span style={{ color: "#4d54d4" }}>
+                      Saldo disponible: {cards && cards[0] && showFormat(cards[0].available) }
+                    </span>
+                  </div>
                 </CCol>
               </CRow>
               <CRow>
