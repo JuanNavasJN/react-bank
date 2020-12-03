@@ -145,15 +145,14 @@ const PagarTarjeta = ({ history }) => {
     setLoading(true);
     setError(null);
     setSuccess(null);
-
+   
     axios
       .post(`${ip}/pay-card`, data, {
         headers: { Authorization: token },
       })
       .then((res) => {
-        setLoading(false);
-        setSuccess("El pago se realizó exitosamente.");
-        
+
+        //Se actualiza el valor disponible de la cuenta
         let aux =
         parseFloat(
           accounts[0].available
@@ -161,11 +160,27 @@ const PagarTarjeta = ({ history }) => {
         parseFloat(
           amount.split(".").join("").split(",").join(".")
         );
-
         let aux2 = accounts
         aux2[0].available = aux.toFixed(2)
-
         setAccounts(aux2)
+
+        //Se actualiza el valor disponible de la tarjeta
+        let aux1 =
+        parseFloat(
+          cards[0].available
+        ) +
+        parseFloat(
+          amount.split(".").join("").split(",").join(".")
+        );
+
+        let aux3 = cards
+        aux3[0].available = aux1.toFixed(2)
+        setCards(aux3)
+
+
+        setLoading(false);
+        setSuccess("El pago se realizó exitosamente.");
+
         setAmount("");
       })
       .catch((error) => {
